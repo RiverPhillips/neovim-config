@@ -15,12 +15,13 @@ return {
 				format = function(diagnostic)
 					local message =
 					    diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub(
-					    "^%s+", "")
+						    "^%s+", "")
 					return message
 				end,
 			},
 		}, neotest_ns)
-		require("neotest").setup({
+		local neotest = require("neotest")
+		neotest.setup({
 			adapters = {
 				require("neotest-go")({
 					args = { "-race", "-timeout=30s" }
@@ -28,5 +29,21 @@ return {
 				require("neotest-rust"),
 			},
 		})
+
+		vim.api.nvim_create_user_command(
+			"TestSummary",
+			function(args)
+				neotest.summary.toggle()
+			end,
+			{ nargs = 0 }
+		)
+
+		vim.api.nvim_create_user_command(
+			"TestRun",
+			function(args)
+				neotest.run.run()
+			end,
+			{ nargs = 0 }
+		)
 	end
 }

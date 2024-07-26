@@ -1,4 +1,4 @@
-return {
+return{ 
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		"williamboman/mason.nvim",
@@ -6,16 +6,24 @@ return {
 	},
 	config = function()
 		require("mason").setup()
-		require("mason-lspconfig").setup()
+		local masonlsp = require("mason-lspconfig")
 
-		local lsp = require("lspconfig")
 
-		lsp.lua_ls.setup {}
-		lsp.rust_analyzer.setup {}
-		lsp.gopls.setup {}
-		lsp.tflint.setup {}
-		lsp.yamlls.setup {}
-		lsp.autotools_ls.setup {}
+		masonlsp.setup({
+			ensure_installed = {
+				"lua_ls",
+				"rust_analyzer",
+				"gopls",
+				"tflint",
+				"yamlls",
+				"autotools_ls"
+			},
+		})
+
+		masonlsp.setup_handlers {
+			 function (server_name) -- default handler (optional)
+            			require("lspconfig")[server_name].setup {}
+       			 end,
+		}
 	end
-
 }
