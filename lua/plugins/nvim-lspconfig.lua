@@ -1,4 +1,4 @@
-return{ 
+return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		"williamboman/mason.nvim",
@@ -16,14 +16,15 @@ return{
 				"gopls",
 				"tflint",
 				"yamlls",
-				"autotools_ls"
+				"autotools_ls",
+				"golangci_lint_ls",
 			},
 		})
 
 		masonlsp.setup_handlers {
-			 function (server_name) -- default handler (optional)
-            			require("lspconfig")[server_name].setup {}
-       			 end,
+			function(server_name) -- default handler (optional)
+				require("lspconfig")[server_name].setup {}
+			end,
 		}
 	end
 }

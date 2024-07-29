@@ -41,7 +41,7 @@ return {
 		vim.api.nvim_create_user_command(
 			"TestRun",
 			function(args)
-				neotest.run.run()
+				neotest.run.run(vim.fn.expand("%"))
 			end,
 			{ nargs = 0 }
 		)
