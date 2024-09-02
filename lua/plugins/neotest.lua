@@ -42,6 +42,15 @@ return {
 			"TestRun",
 			function(args)
 				neotest.run.run(vim.fn.expand("%"))
+				neotest.summary.open()
+			end,
+			{ nargs = 0 }
+		)
+		vim.api.nvim_create_user_command(
+			"TestWatch",
+			function(args)
+				neotest.watch()
+				neotest.summary.open()
 			end,
 			{ nargs = 0 }
 		)
