@@ -1,9 +1,29 @@
 return {
-	"tpope/vim-fugitive",
-	config = function()
-		-- Optional: Add any Fugitive-specific configurations here
-		vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR>", { noremap = true, silent = true })
-		vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true })
-		vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push<CR>", { noremap = true, silent = true })
-	end,
+  "tpope/vim-fugitive",
+  cmd = {
+    "G",
+    "Git",
+    "Gdiffsplit",
+    "Gvdiffsplit",
+    "Gedit",
+    "Gsplit",
+    "Gread",
+    "Gwrite",
+    "Ggrep",
+    "GMove",
+    "GDelete",
+    "GBrowse",
+  },
+  keys = {
+    { "<leader>gs", "<cmd>Git<cr>", desc = "Git status" },
+    { "<leader>gb", "<cmd>Git blame<cr>", desc = "Git blame" },
+    { "<leader>gc", "<cmd>Git commit<cr>", desc = "Git commit" },
+    { "<leader>gd", "<cmd>Gdiffsplit<cr>", desc = "Git diff" },
+    { "<leader>gl", "<cmd>Git log<cr>", desc = "Git log" },
+    { "<leader>gp", "<cmd>Git push<cr>", desc = "Git push" },
+    { "<leader>gP", "<cmd>Git pull<cr>", desc = "Git pull" },
+  },
+  dependencies = {
+    "tpope/vim-rhubarb", -- GitHub integration
+  },
 }

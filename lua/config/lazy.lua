@@ -20,6 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.wo.relativenumber = true
+vim.wo.number = true
 
 
 -- Setup lazy.nvim
