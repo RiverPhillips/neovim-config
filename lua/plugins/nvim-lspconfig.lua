@@ -16,7 +16,6 @@ return {
 				"gopls",
 				"tflint",
 				"yamlls",
-				"autotools_ls",
 				"golangci_lint_ls",
 				"bashls",
 				"terraformls"

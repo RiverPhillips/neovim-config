@@ -24,7 +24,7 @@ return {
 		neotest.setup({
 			adapters = {
 				require("neotest-go")({
-					args = { "-race", "-timeout=30s" }
+					args = { "-race", "-timeout=60s", }
 				}),
 				require("neotest-rust"),
 			},
