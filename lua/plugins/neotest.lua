@@ -7,6 +7,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-neotest/neotest-go",
 		"rouge8/neotest-rust",
+		"mrcjkb/rustaceanvim"
 	},
 	config = function()
 		local neotest_ns = vim.api.nvim_create_namespace("neotest")
@@ -26,7 +27,7 @@ return {
 				require("neotest-go")({
 					args = { "-race", "-timeout=60s", }
 				}),
-				require("neotest-rust"),
+				require('rustaceanvim.neotest')
 			},
 		})
 

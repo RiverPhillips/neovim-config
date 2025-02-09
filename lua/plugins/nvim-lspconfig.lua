@@ -12,7 +12,6 @@ return {
 		masonlsp.setup({
 			ensure_installed = {
 				"lua_ls",
-				"rust_analyzer",
 				"gopls",
 				"tflint",
 				"yamlls",
@@ -20,6 +19,7 @@ return {
 				"bashls",
 				"terraformls"
 			},
+			handlers = { rust_analyzer = function() end }
 		})
 
 		masonlsp.setup_handlers {
