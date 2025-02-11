@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		'saghen/blink.cmp'
 	},
 	config = function()
 		require("mason").setup()
@@ -24,7 +25,8 @@ return {
 
 		masonlsp.setup_handlers {
 			function(server_name) -- default handler (optional)
-				require("lspconfig")[server_name].setup {}
+				local capabilities = require('blink.cmp').get_lsp_capabilities()
+				require("lspconfig")[server_name].setup({ capabilities = capabilities })
 			end,
 		}
 	end
