@@ -6,5 +6,6 @@ return {
 			suggestion = { enabled = false },
 			panel = { enabled = false },
 		})
-	end
+	end,
+	enabled = true
 }
