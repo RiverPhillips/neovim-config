@@ -5,55 +5,67 @@ return {
 		"nvim-lua/plenary.nvim",
 		"antoinemadec/FixCursorHold.nvim",
 		"nvim-treesitter/nvim-treesitter",
-		"nvim-neotest/neotest-go",
-		"rouge8/neotest-rust",
+		{
+			"fredrikaverpil/neotest-golang",
+			version = "*",
+			dependencies = {
+				"leoluz/nvim-dap-go",
+				"andythigpen/nvim-coverage",
+			}
+		},
 		"mrcjkb/rustaceanvim"
 	},
 	config = function()
-		local neotest_ns = vim.api.nvim_create_namespace("neotest")
-		vim.diagnostic.config({
-			virtual_text = {
-				format = function(diagnostic)
-					local message =
-					    diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub(
-						    "^%s+", "")
-					return message
-				end,
-			},
-		}, neotest_ns)
 		local neotest = require("neotest")
+
+		local neotest_golang_opts = {
+			runner = "go",
+			go_test_args = {
+				"-v",
+				"-race",
+				"-count=1",
+				"-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+			},
+		}
+
 		neotest.setup({
 			adapters = {
-				require("neotest-go")({
-					args = { "-race", "-timeout=60s", }
-				}),
-				require('rustaceanvim.neotest')
+				require("neotest-golang")(neotest_golang_opts),
+				require('rustaceanvim.neotest'),
 			},
 		})
-
-		vim.api.nvim_create_user_command(
-			"TestSummary",
-			function(args)
-				neotest.summary.toggle()
+	end,
+	keys = {
+		{
+			"<leader>td",
+			function()
+				require("neotest").run.run({ strategy = "dap", suite = false })
 			end,
-			{ nargs = 0 }
-		)
-
-		vim.api.nvim_create_user_command(
-			"TestRun",
-			function(args)
+			desc = "Debug nearest test"
+		},
+		{
+			"<leader>tr",
+			function()
+				local neotest = require("neotest")
 				neotest.run.run(vim.fn.expand("%"))
 				neotest.summary.open()
 			end,
-			{ nargs = 0 }
-		)
-		vim.api.nvim_create_user_command(
-			"TestWatch",
-			function(args)
-				neotest.watch()
-				neotest.summary.open()
+			desc = "Run all tests"
+		},
+		{
+			"<leader>ts",
+			function()
+				require("neotest").summary.toggle()
 			end,
-			{ nargs = 0 }
-		)
-	end
+			desc = "Show test summary"
+
+		},
+		{
+			"<leader>tst",
+			function()
+				require("neotest").run.stop()
+			end,
+			desc = "Stop test run"
+		},
+	}
 }
